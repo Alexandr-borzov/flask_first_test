@@ -1,0 +1,63 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="container">
+  <div class="badge text-bg-{{cat}}">{{msg}}</div>
+</div>
+{% endfor %}
+
+  <div class="col align-self-start">
+    <h3 class="fs-2 "> {{user_info.Profile.name}} {{user_info.Profile.surname}}</h3>
+    <p> Ваш отдел: {{user_info.Otdel.work}}</p>
+    <div class="nav col-md-auto mb-2 justify-content-start mb-md-0">
+        <a class="btn btn-outline-primary me-2" href="profile/{{user_info.Profile.id}}/update" role="button">Изменить данные</a>
+    </div>
+  </div>
+
+  <hr class="my-4">
+  <p></p>
+  <h4 class="text-center "> Мои сертификаты калибровок</h4>
+  {% for name in kalibr_info %}
+  <div class="container text-center" style="border: 0.3px var(--bs-light-border-subtle) solid">
+    <div class="row text-center-center">
+            <div class="col-sm-8">
+        <div class="row">
+          <div class="col-12 col-sm-12">
+            Прибор: {{name.Pribor.type}} №{{name.Oborudovanie.number}}
+          </div>
+          <div class="col-4 col-sm-6">
+            Дата калибровки: {{name.Oborudovanie.date}}
+          </div>
+          <div class="col-4 col-sm-6">
+            Дейтвителен до: {{name.Oborudovanie.next_date}}
+          </div>
+        </div>
+      </div>
+     <div class="col-sm-3">
+       <a class="btn btn-outline-primary me-2 text-center" href="/user/{{name.Oborudovanie.id}}/download" role="button">Скачать сертификат</a>
+     </div>
+    </div>
+  </div>
+{% endfor %}
+  <p></p>
+  <div class="nav col-md-auto mb-2 justify-content-center mb-md-0">
+      <a class="btn btn-outline-primary me-2" href="profile/add_pribor" role="button">Добавить мое оборудование</a>
+  </div>
+
+  <hr class="my-4">
+
+  <p></p>
+  <h4 class="text-center "> Информация о моих промерах</h4>
+  {% for pr in promer_info %}
+    <div class="container text-center" style="border: 1px var(--bs-light-border-subtle) solid">
+      <div class="row row-cols-2-bg-primary-dark-border-subtle">
+        <div class="col-3">На барабане: {{pr.Promer.lenght}}</div>
+        <div class="col-3">Промерено: {{pr.Promer.prom}}</div>
+        <div class="col-3">Дата: {{pr.Promer.date}}</div>
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock %}

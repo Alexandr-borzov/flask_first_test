@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="container">
+  <div class="badge text-bg-{{cat}}">{{msg}}</div>
+</div>
+{% endfor %}
+
+<div class="container">
+  <main>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Форма регистрации</h4>
+        <form method="post" class="form-contact">
+          <div class="row g-3">
+
+            <div class="col-sm-7">
+              <label class="form-label">Логин</label>
+              <input type="text" class="form-control" placeholder="Логин" name="username">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label">Введите пароль</label>
+              <input type="text" class="form-control" placeholder="Пароль" name="pass">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label">Повторите пароль</label>
+              <input type="text" class="form-control" placeholder="Пароль" name="pass2">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label">Имя</label>
+              <input type="text" class="form-control"  placeholder="Имя" name="name">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label">Фамилия</label>
+              <input type="text" class="form-control" placeholder="Фамилия" name="surname">
+            </div>
+
+
+            <div class="col-sm-7">
+              <label class="form-label">Отдел</label>
+              <select class="form-control" name="otdel">
+                {% for ot in otdel_set%}
+                <option value="{{ ot.id }}">{{ ot.work }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+          </div>
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Зарегистрировать</button>
+        </form>
+      </div>
+
+  </main>
+</div>
+
+{% endblock %}

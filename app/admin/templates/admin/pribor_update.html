@@ -1,0 +1,13 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<form method="post" class="form-contact">
+    <p><label>Название прибора: </label> <input type="text" name="name" value="{{ pribor.type}}" required />
+    <p><input type="submit" value="Изменить" />
+</form>
+{% endblock %}

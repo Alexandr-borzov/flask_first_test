@@ -1,0 +1,69 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+
+<h2>Сертификаты калибровок</h2>
+<a href="./kalibrovka_add" > Добавить сертификат</a></p>
+
+<div class="container text-center">
+  <table>
+    <caption><h3>Необходимо довабить сертификаты калибровки</h3></caption>
+    <thead>
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">Прибор</th>
+        <th scope="col">Принадлежит</th>
+        <th scope="col">Дата калибровки</th>
+        <th scope="col">Действует</th>
+        <th colspan="2">Инструменты</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for n in no_kalibr %}
+      <tr>
+        <th scope="row">{{n.Oborudovanie.id}}</th>
+        <td>{{n.Pribor.type}} №{{n.Oborudovanie.number}}</td>
+        <td>{{n.Otdel.work}}</td>
+        <td>{{n.Oborudovanie.date}}</td>
+        <td>{{n.Oborudovanie.next_date}}</td>
+        <td><a href=".//kalibrovka/{{n.Oborudovanie.id}}/update" > Изменить</a></td>
+        <td><a href="./kalibrovka/{{n.Oborudovanie.id}}/del" > Удалить</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="container text-center">
+  <table>
+    <caption><h3>Все сертификаты калибровок</h3></caption>
+    <thead>
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">Прибор</th>
+        <th scope="col">Принадлежит</th>
+        <th scope="col">Дата калибровки</th>
+        <th scope="col">Действует</th>
+        <th scope="col">Сертификат</th>
+        <th colspan="2">Инструменты</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name in kalibr %}
+      <tr>
+        <th scope="row">{{name.Oborudovanie.id}}</th>
+        <td>{{name.Pribor.type}} №{{name.Oborudovanie.number}}</td>
+        <td>{{name.Otdel.work}}</td>
+        <td>{{name.Oborudovanie.date}}</td>
+        <td>{{name.Oborudovanie.next_date}}</td>
+        <td><a href="./kalibrovka/{{name.Oborudovanie.id}}//download" > Скачать</a></td>
+        <td><a href=".//kalibrovka/{{name.Oborudovanie.id}}/update" > Изменить</a></td>
+        <td><a href="./kalibrovka/{{name.Oborudovanie.id}}/del" > Удалить</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<h1> </h1>
+{% endblock %}

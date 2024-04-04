@@ -1,0 +1,21 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<form method="post" class="form-contact">
+    <p><label>Название отдела: </label>
+        <select name="name">
+            {% for ot in otdel_set%}
+            <option value="{{ ot.id }}">{{ ot.work }}</option>
+            {% endfor %}
+        </select>
+    <p><label>Длинна кабеля на барабане: </label> <input type="text" name="lenght" value="" required />
+    <p><label>Длинна промеренного кабеля: </label> <input type="text" name="prom" value="" required />
+    <p><label>Дата промера: </label> <input type="text" name="date" value="" required />
+    <p><input type="submit" value="Добавить" />
+</form>
+{% endblock %}

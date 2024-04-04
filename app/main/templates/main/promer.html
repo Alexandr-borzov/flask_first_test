@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{{ super() }}
+
+<div class="container text-center">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">Отдел</th>
+        <th scope="col">Всего кабеля</th>
+        <th scope="col">Промерено</th>
+        <th scope="col">Дата промера</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name in names %}
+      <tr>
+        <th scope="row">{{name.Promer.id}}</th>
+        <td>{{name.Otdel.work}}</td>
+        <td>{{name.Promer.lenght}}</td>
+        <td>{{name.Promer.prom}}</td>
+        <td>{{name.Promer.date}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

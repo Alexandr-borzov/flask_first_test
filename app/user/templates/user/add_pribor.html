@@ -1,0 +1,31 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="container">
+  <div class="badge text-bg-{{cat}}">{{msg}}</div>
+</div>
+{% endfor %}
+
+<form method="post" class="form-contact">
+
+    <div class="col-sm-5">
+      <label class="form-label">Выберите тип прибора</label>
+      <select class="form-control" name="pribor_id">
+        {% for otd in pribor_info %}
+          <option value="{{ otd.id }}">{{ otd.type }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-sm-5">
+      <label class="form-label">Укажите номер прибора:</label>
+      <input type="text" class="form-control"  name="number">
+    </div>
+
+    <p></p>
+    <button class="btn btn-outline-primary me-2" type="submit">Добавить</button>
+</form>
+
+{% endblock %}

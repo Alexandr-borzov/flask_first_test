@@ -1,0 +1,32 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<form method="post" class="form-contact"  enctype="multipart/form-data">
+    <p><label>Название отдела: </label>
+        <select name="name">
+            <option value="{{ otdel.id }}">{{ otdel.work }}</option>
+            {% for ot in otdel_set%}
+            <option value="{{ ot.id }}">{{ ot.work }}</option>
+            {% endfor %}
+        </select>
+    <p><label>Тип прибора: </label>
+        <select name="pribor_type" >
+            <option value="{{ pribor_type.id }}">{{ pribor_type.type }}</option>
+            {% for pr in pribor_set%}
+            <option value="{{ pr.id }}">{{ pr.type }}</option>
+            {% endfor %}
+        </select>
+    <p><label>Номер прибора: </label> <input type="text" name="number" value="{{ kalibr.number }}" required />
+    <p><label>Дата калибровки: </label> <input type="text" name="date" value="{{ kalibr.date }}" required />
+    <p><label>Дата следующей калибровки: </label> <input type="text" name="next_date" value="{{ kalibr.next_date }}" required />
+    <p><input type="file" name="file"></p>
+    <p><input type="submit" value="Изменить" />
+    </form>
+
+</form>
+{% endblock %}

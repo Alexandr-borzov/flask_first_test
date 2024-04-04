@@ -1,0 +1,34 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="container">
+  <div class="badge text-bg-{{cat}}">{{msg}}</div>
+</div>
+{% endfor %}
+
+<form method="post" class="form-contact">
+    <div class="col-sm-5">
+      <label class="form-label">Имя:</label>
+      <input type="text" class="form-control" value="{{ profile.name }}" name="name">
+    </div>
+
+    <div class="col-sm-5">
+      <label class="form-label">Фамилия:</label>
+      <input type="text" class="form-control" value="{{ profile.surname }}" name="surname">
+    </div>
+
+    <div class="col-sm-5">
+      <label class="form-label">Отдел</label>
+      <select class="form-control" name="otdel_id">
+        {% for otd in otdel_info %}
+          <option value="{{ otd.id }}">{{ otd.work }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <p></p>
+    <button class="btn btn-outline-primary me-2" type="submit">Изменить</button>
+</form>
+
+{% endblock %}

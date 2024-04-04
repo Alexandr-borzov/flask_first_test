@@ -1,0 +1,35 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+<h2>Данные о промере</h2>
+<a href="./promer_add" > Добавить информацию о новом промере</a></p>
+
+<div class="container text-center">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">Отдел</th>
+        <th scope="col">Всего кабеля</th>
+        <th scope="col">Промерено</th>
+        <th scope="col">Дата промера</th>
+        <th colspan="2">Инструменты</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name in names %}
+      <tr>
+        <th scope="row">{{name.Promer.id}}</th>
+        <td>{{name.Otdel.work}}</td>
+        <td>{{name.Promer.lenght}}</td>
+        <td>{{name.Promer.prom}}</td>
+        <td>{{name.Promer.date}}</td>
+        <td><a href="./promer/{{name.Promer.id}}/del" > Удалить</a></td>
+        <td><a href="./promer/{{name.Promer.id}}/update" > Изменить</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

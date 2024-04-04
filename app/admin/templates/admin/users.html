@@ -1,0 +1,27 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+
+<table>
+  <caption><h3>Данные пользователей</h3></caption>
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">login</th>
+      <th colspan="2">Инструменты</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <th scope="row">{{user.id}}</th>
+      <td>{{user.login}}</td>
+      <td><a href="./users/{{user.id}}/del" > Удалить пользователя</a></td>
+      <td><a href="./users/{{user.id}}/update" > Изменить пароль</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

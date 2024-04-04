@@ -1,0 +1,13 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+<h2>Структурные подразделения</h2>
+<a href="./otdel_add" > Добавить отдел</a></p>
+{% for name in names %}
+   <div>
+       <p>{{name.id}}: {{name.work}} <a href="./otdel/{{name.id}}/del" > Удалить</a>  <a href="./otdel/{{name.id}}/update" > Изменить</a></p>
+
+   </div>
+{% endfor %}
+{% endblock %}

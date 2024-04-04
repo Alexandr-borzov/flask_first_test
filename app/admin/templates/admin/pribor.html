@@ -1,0 +1,13 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+<h2>Типы приборов</h2>
+<a href="./pribor_add" > Добавить прибор</a></p>
+{% for name in names %}
+   <div>
+       <p>{{name.id}}: {{name.type}} <a href="./pribor/{{name.id}}/del" > Удалить</a>  <a href="./pribor/{{name.id}}/update" > Изменить</a></p>
+
+   </div>
+{% endfor %}
+{% endblock %}
