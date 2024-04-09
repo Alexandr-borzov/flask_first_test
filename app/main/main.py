@@ -17,8 +17,11 @@ def index():
 def kalibrovka_main():
 
     try:
-        kalibr = db.session.query(Otdel, Pribor, Oborudovanie).join(Otdel, Otdel.id == Oborudovanie.otdel_id)\
-            .join(Pribor, Pribor.id == Oborudovanie.pribor_id).all()
+        kalibr = db.session.query(Otdel, Pribor, Oborudovanie).\
+            join(Otdel, Otdel.id == Oborudovanie.otdel_id).\
+            join(Pribor, Pribor.id == Oborudovanie.pribor_id).\
+            filter(Oborudovanie.sertificat != b'').\
+            order_by(Oborudovanie.pribor_id).all()
     except:
         return 'Ошибка получения данных'
 
