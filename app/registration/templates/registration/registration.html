@@ -2,62 +2,49 @@
 
 {% block content %}
 {{ super() }}
-{% for cat, msg in get_flashed_messages(True) %}
-<div class="container">
-  <div class="badge text-bg-{{cat}}">{{msg}}</div>
-</div>
-{% endfor %}
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/sign-in.css') }}"/>
 
-<div class="container">
-  <main>
-      <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Форма регистрации</h4>
-        <form method="post" class="form-contact">
-          <div class="row g-3">
-
-            <div class="col-sm-7">
-              <label class="form-label">Логин</label>
-              <input type="text" class="form-control" placeholder="Логин" name="username">
-            </div>
-
-            <div class="col-sm-6">
-              <label class="form-label">Введите пароль</label>
-              <input type="text" class="form-control" placeholder="Пароль" name="pass">
-            </div>
-
-            <div class="col-sm-6">
-              <label class="form-label">Повторите пароль</label>
-              <input type="text" class="form-control" placeholder="Пароль" name="pass2">
-            </div>
-
-            <div class="col-sm-6">
-              <label class="form-label">Имя</label>
-              <input type="text" class="form-control"  placeholder="Имя" name="name">
-            </div>
-
-            <div class="col-sm-6">
-              <label class="form-label">Фамилия</label>
-              <input type="text" class="form-control" placeholder="Фамилия" name="surname">
-            </div>
-
-
-            <div class="col-sm-7">
-              <label class="form-label">Отдел</label>
-              <select class="form-control" name="otdel">
-                {% for ot in otdel_set%}
-                <option value="{{ ot.id }}">{{ ot.work }}</option>
-                {% endfor %}
-              </select>
-            </div>
-
-          </div>
-
-          <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Зарегистрировать</button>
-        </form>
+<div class="container-sm position-static">
+  <main class="form-signin w-100 m-auto shadow">
+    <h5 class="mb-3 fw-normal text-center">Регистрация нового пользователя</h5>
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="container">
+          <div class="badge text-bg-{{cat}}">{{msg}}</div>
+        </div>
+    {% endfor %}
+    <form method="post" class="form-contact">
+      <div class="form-floating p-2">
+          <input type="text" class="form-control" placeholder="" name="username" required />
+          <label >Логин:</label>
       </div>
-
+      <div class="form-floating p-2">
+          <input type="text" class="form-control" placeholder="" name="pass" required />
+          <label >Пароль:</label>
+      </div>
+      <div class="form-floating p-2">
+          <input type="text" class="form-control" placeholder="" name="pass2" required />
+          <label >Повторите пароль:</label>
+      </div>
+      <hr class="my-4">
+      <div class="form-floating p-2">
+          <input type="text" class="form-control" placeholder="" name="name" required />
+          <label >Имя:</label>
+      </div>
+      <div class="form-floating p-2">
+          <input type="text" class="form-control" placeholder="" name="surname" required />
+          <label >Фамилия:</label>
+      </div>
+         <div class="form-floating p-2">
+              <select class="form-select " name="otdel">
+                  <option value="">Выберите отдел</option>
+                  {% for ot in otdel_set%}
+                  <option value="{{ ot.id }}">{{ ot.work }}</option>
+                  {% endfor %}
+              </select>
+             <label class="form-label">Название отдела:</label>
+         </div>
+        <button class="btn btn-outline-primary w-100 py-2" type="submit">Зарегистрировать</button>
+    </form>
   </main>
 </div>
 

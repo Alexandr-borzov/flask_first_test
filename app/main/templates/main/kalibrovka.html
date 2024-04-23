@@ -10,32 +10,26 @@
 {% endfor %}
 
 {% for name in kalibr %}
-<div class="container text-center" style="border: 0.3px var(--bs-light-border-subtle) solid">
-  <div class="row text-center-center">
-    <div class="col-sm-1 text-center-center">
-     {{name.Oborudovanie.id}}
-    </div>
-    <div class="col-sm-8">
-      <div class="row">
-        <div class="col-12 col-sm-6">
-          Прибор: {{name.Pribor.type}} №{{name.Oborudovanie.number}}
-        </div>
-        <div class="col-4 col-sm-6">
-          Принадлежит: {{name.Otdel.work}}
-        </div>
-        <div class="col-4 col-sm-6">
-          Дата калибровки: {{name.Oborudovanie.date}}
-        </div>
-        <div class="col-4 col-sm-6">
-          Дейтвителен до: {{name.Oborudovanie.next_date}}
+  <div class="container text-center" style="border: 0.3px var(--bs-dark-border-subtle) solid">
+    <div class="row text-center-center">
+     <div class="col-sm-8">
+        <div class="row">
+          <div class="col-12 col-sm-12">
+            Прибор: {{name.Pribor.type}} №{{name.Oborudovanie.number}}
+          </div>
+          <div class="col-4 col-sm-6">
+            Дата калибровки: {{name.Oborudovanie.date}}
+          </div>
+          <div class="col-4 col-sm-6">
+            Дейтвителен до: {{name.Oborudovanie.next_date}}
+          </div>
         </div>
       </div>
+     <div class="col-sm-4 gy-1">
+       <a class="btn btn-outline-primary me-2 text-center" href="/user/{{name.Oborudovanie.id}}/download" role="button">Скачать сертификат</a>
+     </div>
     </div>
-   <div class="col-sm-3">
-     <a class="btn btn-outline-primary me-2 text-center" href="/kalibrovka/{{name.Oborudovanie.id}}/download" role="button">Скачать сертификат</a>
-   </div>
   </div>
-</div>
 {% endfor %}
 {% endblock %}
 

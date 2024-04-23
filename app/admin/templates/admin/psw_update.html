@@ -1,18 +1,31 @@
-{% extends 'admin/base_admin.html' %}
+{% extends 'admin/new_base.html' %}
 
 {% block content %}
 {{ super() }}
-<div id="login" class="wnd_dlg_back login_wnd">
-<div class="login">
-	<p class="title">Изменить пароль</p>
-{% for cat, msg in get_flashed_messages(True) %}
-<div class="flash {{cat}}">{{msg}}</div>
-{% endfor %}
-	<form action="" method="post">
-		<p><label class="form-label">Пароль: </label><input type="text" name="psw" />
-		<p><label class="form-label">Повторите пароль: </label><input type="password" name="psw2" />
-		<p align="center"><input class="login_button" type="submit" value="Сменить">
-	</form>
+
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/sign-in.css') }}"/>
+
+<div class="container-sm position-static">
+  <main class="form-signin w-100 m-auto shadow">
+    <h5 class="mb-3 fw-normal text-center">Смена пароля у пользователя</h5>
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="container">
+          <div class="badge text-bg-{{cat}}">{{msg}}</div>
+        </div>
+    {% endfor %}
+    <form method="post" class="form-contact">
+        <div class="form-floating p-2">
+          <input type="text" class="form-control" name="psw" required />
+          <label >Пароль:</label>
+        </div>
+        <div class="form-floating p-2">
+          <input type="password" class="form-control" name="psw2" required />
+          <label >Повторите пароль:</label>
+        </div>
+        <p></p>
+        <button class="btn btn-outline-primary w-100 py-2" type="submit">Сменить</button>
+    </form>
+  </main>
 </div>
-</div>
+
 {% endblock %}

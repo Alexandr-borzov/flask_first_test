@@ -20,7 +20,7 @@
   <p></p>
   <h4 class="text-center "> Мои сертификаты калибровок</h4>
   {% for name in kalibr_info %}
-  <div class="container text-center" style="border: 0.3px var(--bs-light-border-subtle) solid">
+  <div class="container text-center" style="border: 0.3px var(--bs-dark-border-subtle) solid">
     <div class="row text-center-center">
             <div class="col-sm-8">
         <div class="row">
@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-     <div class="col-sm-3">
+     <div class="col-sm-4 gy-1">
        <a class="btn btn-outline-primary me-2 text-center" href="/user/{{name.Oborudovanie.id}}/download" role="button">Скачать сертификат</a>
      </div>
     </div>
@@ -51,11 +51,11 @@
   <p></p>
   <h4 class="text-center "> Информация о моих промерах</h4>
   {% for pr in promer_info %}
-    <div class="container text-center" style="border: 1px var(--bs-light-border-subtle) solid">
+    <div class="container text-center" style="border: 1px var(--bs-dark-border-subtle) solid">
       <div class="row row-cols-2-bg-primary-dark-border-subtle">
-        <div class="col-3">На барабане: {{pr.Promer.lenght}}</div>
-        <div class="col-3">Промерено: {{pr.Promer.prom}}</div>
-        <div class="col-3">Дата: {{pr.Promer.date}}</div>
+        <div class="col-4">Дата: {{pr.Promer.date}}</div>
+        <div class="col-4">Промерено: {{pr.Promer.prom}}</div>
+        <div class="col-4">На барабане: {{pr.Promer.lenght}}</div>
       </div>
     </div>
   {% endfor %}

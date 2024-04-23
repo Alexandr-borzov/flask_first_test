@@ -1,4 +1,4 @@
-{% extends 'main/new_base.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 {{ super() }}
@@ -9,22 +9,25 @@
 </div>
 {% endfor %}
 
-<div class="container">
+<div class="container py-3">
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 ">
-      <div class="feature col container">
-        <h3 class="fs-2 text-body-emphasis">Данные о промере</h3>
-        <p>Узнать данные о промере</p>
-        <a href="promer" class="icon-link">
-          Перейти
-        </a>
-      </div>
-      <div class="feature col container">
-        <h3 class="fs-2 text-body-emphasis">Сертификаты калибровки</h3>
-        <p>Получить сертификаты калиброки</p>
-        <a href="kalibrovka" class="icon-link">
-          Перейти
-        </a>
-      </div>
+
+        <div class="shadow feature col container py-3">
+          <h3 class="fs-2 text-body-emphasis">Данные о промере</h3>
+          <p>Узнать данные о промере</p>
+          <a href="promer" class="icon-link">
+            Перейти
+          </a>
+        </div>
+
+        <div class="shadow feature col container py-3">
+          <h3 class="fs-2 text-body-emphasis">Сертификаты калибровки</h3>
+            <p>Получить сертификаты калиброки</p>
+            <a href="kalibrovka" class="icon-link">
+              Перейти
+            </a>
+        </div>
+
       </div>
     </div>
 </div>

@@ -21,10 +21,11 @@
 
     <div class="col-sm-5">
       <label class="form-label">Отдел</label>
-      <select class="form-control" name="otdel_id">
-        {% for otd in otdel_info %}
-          <option value="{{ otd.id }}">{{ otd.work }}</option>
-        {% endfor %}
+      <select class="form-select form-select" name="otdel_id">
+          <option value="{{ my_otdel.id }}">{{ my_otdel.work }}</option>
+          {% for otd in otdel_info %}
+            <option value="{{ otd.id }}">{{ otd.work }}</option>
+          {% endfor %}
       </select>
     </div>
     <p></p>

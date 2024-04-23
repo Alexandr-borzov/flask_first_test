@@ -1,13 +1,25 @@
-{% extends 'admin/base_admin.html' %}
+{% extends 'admin/new_base.html' %}
 
 {% block content %}
 {{ super() }}
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/sign-in.css') }}"/>
+<div class="container-sm position-static">
+  <main class="form-signin w-100 m-auto shadow">
+    <h5 class="mb-3 fw-normal text-center">Добавление нового типа приборов</h5>
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="container">
+          <div class="badge text-bg-{{cat}}">{{msg}}</div>
+        </div>
+    {% endfor %}
+    <form method="post" class="form-contact">
+        <div class="form-floating">
+          <input type="text" class="form-control" name="name" required />
+          <label >Название прибора:</label>
+        </div>
+        <p></p>
+        <button class="btn btn-outline-primary w-100 py-2" type="submit">Добавить</button>
+    </form>
+  </main>
+</div>
 
-{% for cat, msg in get_flashed_messages(True) %}
-<div class="flash {{cat}}">{{msg}}</div>
-{% endfor %}
-<form method="post" class="form-contact">
-    <p><label>Название прибора: </label> <input type="text" name="name" value="" required />
-    <p><input type="submit" value="Добавить" />
-</form>
 {% endblock %}

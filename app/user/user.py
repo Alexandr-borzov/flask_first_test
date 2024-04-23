@@ -13,7 +13,8 @@ user = Blueprint('user', __name__, template_folder='templates', static_folder='s
 @login_required
 def profile_update(id):
     profile = Profile.query.get_or_404(id)
-    otdel_info = Otdel.query.all()
+    otdel_info = Otdel.query.filter(Otdel.id != profile.otdel_id).all()
+    my_otdel = Otdel.query.get_or_404(profile.otdel_id)
     if request.method == 'POST':
         profile.name = request.form['name']
         profile.surname = request.form['surname']
@@ -27,6 +28,7 @@ def profile_update(id):
         return render_template('user/profile_update.html',
                                title='Изменить информацию профиля',
                                profile=profile,
+                               my_otdel=my_otdel,
                                otdel_info=otdel_info)
 
 

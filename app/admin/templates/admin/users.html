@@ -1,27 +1,31 @@
-{% extends 'admin/base_admin.html' %}
+{% extends 'admin/new_base.html' %}
 
 {% block content %}
 {{ super() }}
-
-<table>
-  <caption><h3>Данные пользователей</h3></caption>
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">login</th>
-      <th colspan="2">Инструменты</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for user in users %}
-    <tr>
-      <th scope="row">{{user.id}}</th>
-      <td>{{user.login}}</td>
-      <td><a href="./users/{{user.id}}/del" > Удалить пользователя</a></td>
-      <td><a href="./users/{{user.id}}/update" > Изменить пароль</a></td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
+<div class="container text-center">
+      <h4>Данные пользователей</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">login</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th colspan="2">Инструменты</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <th scope="row">{{user.Users.id}}</th>
+            <td>{{user.Users.login}}</td>
+            <td>{{user.Profile.name}}</td>
+            <td>{{user.Profile.surname}}</td>
+            <td><a href="./users/{{user.Users.id}}/del" > Удалить пользователя</a></td>
+            <td><a href="./users/{{user.Users.id}}/update" > Изменить пароль</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
 {% endblock %}

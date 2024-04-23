@@ -4,27 +4,54 @@
 {{ super() }}
 
 <div class="container text-center">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">№</th>
-        <th scope="col">Отдел</th>
-        <th scope="col">Всего кабеля</th>
-        <th scope="col">Промерено</th>
-        <th scope="col">Дата промера</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for name in names %}
-      <tr>
-        <th scope="row">{{name.Promer.id}}</th>
-        <td>{{name.Otdel.work}}</td>
-        <td>{{name.Promer.lenght}}</td>
-        <td>{{name.Promer.prom}}</td>
-        <td>{{name.Promer.date}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="">
+    <div>
+      <h4>Информация о последних промерах</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Отдел</th>
+            <th scope="col">Дата промера</th>
+            <th scope="col">Промерено</th>
+            <th scope="col">Всего кабеля</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for l in last %}
+          <tr>
+            <td>{{l.Otdel.work}}</td>
+            <td>{{l.Promer.date}}</td>
+            <td>{{l.Promer.prom}}</td>
+            <td>{{l.Promer.lenght}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  <hr>
+    <div>
+      <h4>Информация о всех промерах</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Отдел</th>
+            <th scope="col">Дата промера</th>
+            <th scope="col">Промерено</th>
+            <th scope="col">Всего кабеля</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for name in names %}
+          <tr>
+            <td>{{name.Otdel.work}}</td>
+            <td>{{name.Promer.date}}</td>
+            <td>{{name.Promer.prom}}</td>
+            <td>{{name.Promer.lenght}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 {% endblock %}

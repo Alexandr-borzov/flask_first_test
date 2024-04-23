@@ -1,32 +1,55 @@
-{% extends 'admin/base_admin.html' %}
+{% extends 'admin/new_base.html' %}
 
 {% block content %}
 {{ super() }}
 
-{% for cat, msg in get_flashed_messages(True) %}
-<div class="flash {{cat}}">{{msg}}</div>
-{% endfor %}
-<form method="post" class="form-contact"  enctype="multipart/form-data">
-    <p><label>Название отдела: </label>
-        <select name="name">
-            <option value="{{ otdel.id }}">{{ otdel.work }}</option>
-            {% for ot in otdel_set%}
-            <option value="{{ ot.id }}">{{ ot.work }}</option>
-            {% endfor %}
-        </select>
-    <p><label>Тип прибора: </label>
-        <select name="pribor_type" >
-            <option value="{{ pribor_type.id }}">{{ pribor_type.type }}</option>
-            {% for pr in pribor_set%}
-            <option value="{{ pr.id }}">{{ pr.type }}</option>
-            {% endfor %}
-        </select>
-    <p><label>Номер прибора: </label> <input type="text" name="number" value="{{ kalibr.number }}" required />
-    <p><label>Дата калибровки: </label> <input type="text" name="date" value="{{ kalibr.date }}" required />
-    <p><label>Дата следующей калибровки: </label> <input type="text" name="next_date" value="{{ kalibr.next_date }}" required />
-    <p><input type="file" name="file"></p>
-    <p><input type="submit" value="Изменить" />
-    </form>
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/sign-in.css') }}"/>
 
-</form>
+<div class="container-sm position-static">
+  <main class="form-signin w-100 m-auto shadow">
+    <h5 class="mb-3 fw-normal text-center">Изменение данных о калибровке</h5>
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="container">
+          <div class="badge text-bg-{{cat}}">{{msg}}</div>
+        </div>
+    {% endfor %}
+    <form method="post" class="form-contact" enctype="multipart/form-data">
+        <div class="form-floating p-2">
+            <select class="form-select " name="name">
+              <option value="{{ otdel.id }}">{{ otdel.work }}</option>
+              {% for ot in otdel_set%}
+              <option value="{{ ot.id }}">{{ ot.work }}</option>
+              {% endfor %}
+            </select>
+            <label class="form-label">Название отдела:</label>
+        </div>
+        <div class="form-floating p-2">
+            <select class="form-select " name="pribor_type">
+              <option value="{{ pribor_type.id }}">{{ pribor_type.type }}</option>
+              {% for pr in pribor_set%}
+              <option value="{{ pr.id }}">{{ pr.type }}</option>
+              {% endfor %}
+            </select>
+            <label class="form-label">Тип прибора:</label>
+         </div>
+        <div class="form-floating p-2">
+          <input type="text" class="form-control" name="number" value="{{ kalibr.number }}" required />
+          <label >Номер прибора:</label>
+        </div>
+        <div class="form-floating p-2">
+          <input type="text" class="form-control" name="date" value="{{ kalibr.date }}" required />
+          <label >Дата калибровки:</label>
+        </div>
+        <div class="form-floating p-2">
+          <input type="text" class="form-control" name="next_date" value="{{ kalibr.next_date }}" required />
+          <label >Дата следующей калибровки:</label>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="file" name="file">
+        </div>
+        <button class="btn btn-outline-primary w-100 py-2" type="submit">Изменить</button>
+    </form>
+  </main>
+</div>
+
 {% endblock %}

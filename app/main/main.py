@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, flash, send_file, redirect, url_for, request
 from flask_login import login_required
 from io import BytesIO
+from sqlalchemy import func
 
 from app.extensions import db
 from app.models import Pribor, Otdel, Promer, Oborudovanie
@@ -49,9 +50,13 @@ def kalibrovka_download(id):
 def promer_main():
     try:
         names = db.session.query(Otdel, Promer).join(Otdel, Otdel.id == Promer.otdel_id).order_by(Promer.id.desc()).all()
+        last = db.session.query(Otdel, Promer).join(Otdel, Otdel.id == Promer.otdel_id).group_by(Promer.otdel_id).having(func.max(Promer.id)).all()
     except:
         return 'Ошибка получения данных'
-    return render_template('main/promer.html', title='Данные о промере', names=names)
+    return render_template('main/promer.html',
+                           title='Данные о промере',
+                           names=names,
+                           last=last)
 
 
 @main.errorhandler(401)

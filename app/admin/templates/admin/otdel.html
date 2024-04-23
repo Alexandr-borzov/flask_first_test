@@ -1,13 +1,29 @@
-{% extends 'admin/base_admin.html' %}
+{% extends 'admin/new_base.html' %}
 
 {% block content %}
 {{ super() }}
 <h2>Структурные подразделения</h2>
 <a href="./otdel_add" > Добавить отдел</a></p>
-{% for name in names %}
-   <div>
-       <p>{{name.id}}: {{name.work}} <a href="./otdel/{{name.id}}/del" > Удалить</a>  <a href="./otdel/{{name.id}}/update" > Изменить</a></p>
 
-   </div>
-{% endfor %}
+<div class="container text-center">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Отдел</th>
+        <th colspan="2">Инструменты</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name in names %}
+      <tr>
+        <td>{{name.id}}</td>
+        <td>{{name.work}}</td>
+        <td><a href="./otdel/{{name.id}}/del" > Удалить</a></td>
+        <td><a href="./otdel/{{name.id}}/update" > Изменить</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

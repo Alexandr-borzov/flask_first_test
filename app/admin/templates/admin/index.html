@@ -1,9 +1,51 @@
-{% extends 'admin/base_admin.html' %}
+{% extends 'admin/new_base.html' %}
 
 {% block content %}
 {{ super() }}
-    <h2>Данные о промере</h2> <a href="./promer" > Перейти</a></p>
-    <h2>Калибровка приборов</h2><a href="./kalibrovka" > Перейти</a></p>
-    <h2>Типы приборов</h2> <a href="./pribor" > Перейти</a></p>
-    <h2>Структурные подразделения</h2><a href="./otdel" > Перейти</a></p>
+<div class="container py-3">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 ">
+        <div class="shadow feature col container py-3">
+          <h3 class="fs-2 text-body-emphasis">Пользователи</h3>
+          <p>Узнать данные о пользователях. Изменить пароль пользователей. Удалить пользователей</p>
+          <a href="./users" class="icon-link">
+            Перейти
+          </a>
+        </div>
+
+        <div class="shadow feature col container py-3">
+          <h3 class="fs-2 text-body-emphasis">Промер</h3>
+          <p>Узнать данные о промере. Добавить данные о промере</p>
+          <a href="./promer" class="icon-link">
+            Перейти
+          </a>
+        </div>
+
+        <div class="shadow feature col container py-3">
+          <h3 class="fs-2 text-body-emphasis">Калибровка</h3>
+            <p>Информация о калибровке приборов. Добавить калибровки приборов. Изменить данные о калибровках.
+                Проверить информацию об отсутствии сертификатов калибровки</p>
+            <a href="./kalibrovka" class="icon-link">
+              Перейти
+            </a>
+        </div>
+
+        <div class="shadow feature col container py-3">
+          <h3 class="fs-2 text-body-emphasis">Оборудование</h3>
+            <p>Информация о оборудовании и типах приборов. Изменить типы оборудования. Добавить новые типы оборудования</p>
+            <a href="./pribor" class="icon-link">
+              Перейти
+            </a>
+        </div>
+
+        <div class="shadow feature col container py-3">
+          <h3 class="fs-2 text-body-emphasis">Отделы</h3>
+            <p>Информация о структурных подразделениях. Изменить данные о структурных подразделениях. Удалить данные о структурных подразделениях</p>
+            <a href="./otdel" class="icon-link">
+              Перейти
+            </a>
+        </div>
+      </div>
+    </div>
+</div>
+
 {% endblock %}

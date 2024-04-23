@@ -51,6 +51,7 @@ def user_registration():
         name = request.form.get('name')
         surname = request.form.get('surname')
         otd = request.form.get('otdel')
+        print([log, pasw, pasw2, name, surname, otd])
         if all([log, pasw, pasw2, name, surname, otd]):
             chek_log = Users.query.filter(Users.login == log).all()
             if not chek_log:

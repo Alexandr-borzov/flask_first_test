@@ -2,20 +2,12 @@ from io import BytesIO
 from flask import Blueprint, request, redirect, render_template, url_for, flash, send_file
 from flask_login import current_user, login_required
 from werkzeug.security import generate_password_hash
+from sqlalchemy import or_
 
 from app.extensions import db
-from app.models import Pribor, Otdel, Promer, Oborudovanie, Users
+from app.models import Pribor, Otdel, Promer, Oborudovanie, Users, Profile
 
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
-
-menu = [{'url': 'main.index', 'title': 'Главная страница'},
-        {'url': '.users', 'title': 'Пользователи'},
-        {'url': '.promer', 'title': 'Промер'},
-        {'url': '.kalibrovka', 'title': 'Калибровка'},
-        {'url': '.pribor', 'title': 'Типы оборудования'},
-        {'url': '.otdel', 'title': 'Отделы'},
-        {'url': 'registration.user_logout', 'title': 'Выйти'}]
-
 
 def is_admin():
     u = Users.query.filter(Users.id == current_user.get_id()).one()
@@ -28,7 +20,7 @@ def admin_index():
     if not is_admin():
         flash('Доступ запрещен', category='danger')
         return redirect(url_for('main.index'))
-    return render_template('admin/index.html', menu=menu, title='Админ-панель')
+    return render_template('admin/index.html', title='Админ-панель')
 
 
 @admin.route('/promer')
@@ -41,7 +33,7 @@ def promer():
         names = db.session.query(Otdel, Promer).join(Otdel, Otdel.id == Promer.otdel_id).order_by(Promer.id.desc()).all()
     except:
         return 'Ошибка получения данных'
-    return render_template('admin/promer.html', menu=menu, title='Данные о промере', names=names)
+    return render_template('admin/promer.html', title='Данные о промере', names=names)
 
 
 @admin.route('/promer_add', methods=['POST', 'GET'])
@@ -69,7 +61,6 @@ def promer_add():
             return 'Произошла ошибка при добавлении записи'
 
     return render_template('admin/promer_add.html',
-                           menu=menu,
                            title='Добавить данные о промере',
                            otdel_set=otdel_set)
 
@@ -95,8 +86,9 @@ def promer_update(id):
     if not is_admin():
         flash('Доступ запрещен', category='danger')
         return redirect(url_for('main.index'))
-    otdel_set = Otdel.query.all()
     promer = Promer.query.get_or_404(id)
+    my_otdel = Otdel.query.get_or_404(promer.otdel_id)
+    otdel_set = Otdel.query.filter(Otdel.id != promer.otdel_id).all()
     if request.method == 'POST':
         promer.otdel_id = request.form['name']
         promer.lenght = request.form['lenght']
@@ -111,9 +103,9 @@ def promer_update(id):
     else:
         return render_template('admin/promer_update.html',
                                title='Изменить данные о промере',
-                               menu=menu,
                                promer=promer,
-                               otdel_set=otdel_set)
+                               otdel_set=otdel_set,
+                               my_otdel=my_otdel)
 
 
 @admin.route('/kalibrovka')
@@ -126,7 +118,7 @@ def kalibrovka():
         no_kalibr = db.session.query(Otdel, Pribor, Oborudovanie).\
             join(Otdel, Otdel.id == Oborudovanie.otdel_id).\
             join(Pribor, Pribor.id == Oborudovanie.pribor_id).\
-            filter(Oborudovanie.sertificat == b'').\
+            filter(or_(Oborudovanie.sertificat == b'', Oborudovanie.sertificat == None)).\
             order_by(Oborudovanie.pribor_id).all()
         kalibr = db.session.query(Otdel, Pribor, Oborudovanie).\
             join(Otdel, Otdel.id == Oborudovanie.otdel_id).\
@@ -136,7 +128,6 @@ def kalibrovka():
         return 'Ошибка получения данных'
 
     return render_template('admin/kalibrovka.html',
-                           menu=menu,
                            title='Данные о калибровке приборов',
                            kalibr=kalibr,
                            no_kalibr=no_kalibr)
@@ -160,7 +151,6 @@ def kalibrovka_add():
         if Oborudovanie.query.filter(Oborudovanie.pribor_id == pribor_id, Oborudovanie.number == number).all():
             flash("Данный прибор уже имеется в базе", category='error')
             return render_template('admin/kalibrovka_add.html',
-                                   menu=menu,
                                    title='Добавить данные о калибровке прибора',
                                    otdel_set=otdel_set,
                                    pribor_set=pribor_set)
@@ -179,7 +169,6 @@ def kalibrovka_add():
                 return 'Произошла ошибка при добавлении записи'
 
     return render_template('admin/kalibrovka_add.html',
-                           menu=menu,
                            title='Добавить данные о калибровке прибора',
                            otdel_set=otdel_set,
                            pribor_set=pribor_set)
@@ -213,7 +202,6 @@ def kalibrovka_update(id):
     else:
         return render_template('admin/kalibrovka_update.html',
                                title='Изменить данные о калибровке',
-                               menu=menu,
                                kalibr=kalibr,
                                pribor_type=pribor_type,
                                otdel=otdel,
@@ -262,7 +250,7 @@ def pribor():
         flash('Доступ запрещен', category='danger')
         return redirect(url_for('main.index'))
     names = Pribor.query.all()
-    return render_template('admin/pribor.html', menu=menu, title='Типы оборудования', names=names)
+    return render_template('admin/pribor.html', title='Типы оборудования', names=names)
 
 
 @admin.route('/pribor_add', methods=['POST', 'GET'])
@@ -281,7 +269,7 @@ def pribor_add():
         except:
             return 'Произошла ошибка при добавлении записи'
 
-    return render_template('admin/pribor_add.html', menu=menu, title='Добавить прибор')
+    return render_template('admin/pribor_add.html', title='Добавить прибор')
 
 
 @admin.route('/pribor/<int:id>/del')
@@ -314,7 +302,7 @@ def update_pribor(id):
         except:
             return 'Произошла ошибка при добавлении записи'
     else:
-        return render_template('admin/pribor_update.html', menu=menu, title='Изменить прибор', pribor=pribor)
+        return render_template('admin/pribor_update.html', title='Изменить прибор', pribor=pribor)
 
 
 @admin.route('/otdel')
@@ -324,7 +312,7 @@ def otdel():
         flash('Доступ запрещен', category='danger')
         return redirect(url_for('main.index'))
     names = Otdel.query.all()
-    return render_template('admin/otdel.html', menu=menu, title='Подразделения', names=names)
+    return render_template('admin/otdel.html', title='Подразделения', names=names)
 
 
 @admin.route('/otdel_add', methods=['POST', 'GET'])
@@ -343,7 +331,7 @@ def otdel_add():
         except:
             return 'Произошла ошибка при добавлении записи'
 
-    return render_template('admin/otdel_add.html', menu=menu, title='Добавить отдел')
+    return render_template('admin/otdel_add.html', title='Добавить отдел')
 
 
 @admin.route('/otdel/<int:id>/del')
@@ -376,7 +364,7 @@ def otdel_update(id):
         except:
             return 'Произошла ошибка при добавлении записи'
     else:
-        return render_template('admin/otdel_update.html', menu=menu, title='Изменить отдел', otdel=otdel)
+        return render_template('admin/otdel_update.html', title='Изменить отдел', otdel=otdel)
 
 
 @admin.route('/users')
@@ -385,8 +373,8 @@ def users():
     if not is_admin():
         flash('Доступ запрещен', category='danger')
         return redirect(url_for('main.index'))
-    user = Users.query.all()
-    return render_template('admin/users.html', menu=menu, title='Подразделения', users=user)
+    user = db.session.query(Users, Profile).join(Profile, Users.id == Profile.user_id).all()
+    return render_template('admin/users.html', title='Пользователи', users=user)
 
 @admin.route('/users/<int:id>/del')
 @login_required
@@ -395,8 +383,11 @@ def user_delet(id):
         flash('Доступ запрещен', category='danger')
         return redirect(url_for('main.index'))
     user = Users.query.get_or_404(id)
+    profile = Profile.query.filter(Profile.user_id == user.id).all()
     try:
         db.session.delete(user)
+        for p in profile:
+            db.session.delete(p)
         db.session.commit()
         return redirect(url_for('.users'))
     except:
@@ -419,6 +410,32 @@ def user_update(id):
             except:
                 return 'Произошла ошибка при добавлении записи'
         else:
-            flash('Пароли не совпадают', category='error')
+            flash('Пароли не совпадают', category='danger')
+            return render_template('admin/psw_update.html', title='Изменить пароль')
     else:
-        return render_template('admin/psw_update.html', menu=menu, title='Изменить пароль')
+        return render_template('admin/psw_update.html', title='Изменить пароль')
+
+
+@admin.route('/users_profile')
+@login_required
+def users_profile():
+    if not is_admin():
+        flash('Доступ запрещен', category='danger')
+        return redirect(url_for('main.index'))
+    profile = db.session.query(Profile).all()
+    return render_template('admin/users_profile.html', title='Профили', users=profile)
+
+
+@admin.route('/users_profile/<int:id>/del')
+@login_required
+def user_profile_delet(id):
+    if not is_admin():
+        flash('Доступ запрещен', category='danger')
+        return redirect(url_for('main.index'))
+    profile = Profile.query.get_or_404(id)
+    try:
+        db.session.delete(profile)
+        db.session.commit()
+        return redirect(url_for('.users_profile'))
+    except:
+        return 'Произошла ошибка при удалении записи'

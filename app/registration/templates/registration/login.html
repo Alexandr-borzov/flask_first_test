@@ -2,15 +2,14 @@
 
 {% block content %}
 {{ super() }}
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/sign-in.css') }}"/>
 {% for cat, msg in get_flashed_messages(True) %}
 <div class="container">
   <div class="badge text-bg-{{cat}}">{{msg}}</div>
 </div>
 {% endfor %}
-
-
-<div class="container-sm">
-  <main class="form-signin w-100 m-100">
+<div class="container-sm position-static ">
+  <main class="form-signin w-100 m-auto">
       <form method="post" class="form-contact">
         <h1 class="h3 mb-3 fw-normal text-center">Вход в личный кабинет</h1>
 
@@ -39,7 +38,7 @@
 
         <hr class="my-4">
 
-        <button class="btn btn-primary w-100 py-2" type="submit">Войти</button>
+        <button class="btn btn-outline-primary w-100 py-2" type="submit">Войти</button>
       </form>
   </main>
 </div>
