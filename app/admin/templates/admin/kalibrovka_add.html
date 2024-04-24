@@ -14,15 +14,6 @@
         </div>
     {% endfor %}
     <form method="post" class="form-contact" enctype="multipart/form-data">
-         <div class="form-floating p-2">
-              <select class="form-select " name="name">
-                  <option value="">Выберите отдел</option>
-                  {% for ot in otdel_set%}
-                  <option value="{{ ot.id }}">{{ ot.work }}</option>
-                  {% endfor %}
-              </select>
-             <label class="form-label">Название отдела:</label>
-         </div>
         <div class="form-floating p-2">
               <select class="form-select " name="pribor_type">
                   <option value="">Выберите тип прибора</option>
@@ -31,6 +22,15 @@
                   {% endfor %}
               </select>
              <label class="form-label">Тип прибора:</label>
+         </div>
+        <div class="form-floating p-2">
+              <select class="form-select " name="name">
+                  <option value="">Выберите отдел</option>
+                  {% for ot in otdel_set%}
+                  <option value="{{ ot.id }}">{{ ot.work }}</option>
+                  {% endfor %}
+              </select>
+             <label class="form-label">Название отдела:</label>
          </div>
         <div class="form-floating p-2">
           <input type="text" class="form-control" name="number" required />

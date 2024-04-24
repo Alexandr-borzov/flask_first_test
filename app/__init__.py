@@ -11,9 +11,9 @@ from app.registration.registration import registration
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///metrology.db'
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////data/metrology.db'
-    #app.config['SECRET_KEY'] = os.environ ['SECRET_KEY']
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////data/metrology.db'
+    # app.config['SECRET_KEY'] = os.environ ['SECRET_KEY']
 
     db.init_app(app)
     manager.init_app(app)

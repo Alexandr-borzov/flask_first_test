@@ -122,7 +122,8 @@ def kalibrovka():
             order_by(Oborudovanie.pribor_id).all()
         kalibr = db.session.query(Otdel, Pribor, Oborudovanie).\
             join(Otdel, Otdel.id == Oborudovanie.otdel_id).\
-            join(Pribor, Pribor.id == Oborudovanie.pribor_id).\
+            join(Pribor, Pribor.id == Oborudovanie.pribor_id). \
+            filter(Oborudovanie.sertificat != b'', Oborudovanie.sertificat != None). \
             order_by(Oborudovanie.pribor_id).all()
     except:
         return 'Ошибка получения данных'
@@ -191,7 +192,9 @@ def kalibrovka_update(id):
         kalibr.number = request.form['number']
         kalibr.date = request.form['date']
         kalibr.next_date = request.form['next_date']
-        kalibr.sertificat = request.files['file'].read()
+        sertificat = request.files['file'].read()
+        if sertificat:
+            kalibr.sertificat = sertificat
         kalibr.otdel_id = request.form['name']
 
         try:
